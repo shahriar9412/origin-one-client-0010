@@ -9,7 +9,7 @@ import {
 import AuthProvider from './provider/AuthProvider';
 
 
-import Root from './components/Root';
+import Root from './root/Root';
 import ErrorPage from './components/ErrorPage';
 
 import Home from './components/Home';
