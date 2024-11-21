@@ -2,9 +2,11 @@
 import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from "react-router-dom";
-import { AuthContext } from "../components/AuthContext";
+import { AuthContext } from "./AuthContext";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Register = () => {
-    const { createUser } = useContext(AuthContext);
+    const { createUser} = useContext(AuthContext);
 
     const [registerError, setRegisterError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -32,8 +34,8 @@ const Register = () => {
         }
 
         createUser(username, photoURL, email, password)
-            .then(() => {
-
+            .then(()=>{
+                toast("Successfully user created")
             })
             .catch(error => {
                 setRegisterError(error.message);
@@ -73,18 +75,19 @@ const Register = () => {
 
                         </span>
                     </div>
-
+                    
                     <br />
                     <input className="btn bg-pink-500 text-white hover:bg-yellow-500 mb-4 w-full" type="submit" value="Register" />
-
+                    
                 </form>
-
+                
                 {
                     registerError && <p className="text-red-700">{registerError}</p>
                 }
 
                 <p>Already have an account? Please <Link className="btn text-pink-500" to="/login">Log In</Link></p>
             </div>
+            <ToastContainer/>
         </div>
     );
 };

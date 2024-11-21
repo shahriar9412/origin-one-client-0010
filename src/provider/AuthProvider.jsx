@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, getAuth } from "firebase/auth";
 
+import { getFirestore, doc, setDoc } from "firebase/firestore";
+
 import { AuthContext } from '../components/AuthContext';
 import app from "../firebase/firebase.config";
 
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
@@ -19,6 +22,8 @@ const AuthProvider = ({ children }) => {
 
         createUserWithEmailAndPassword(auth, email, password)
             .then(async (result) => {
+                const ref = doc(db, "usersinformation", result.user.uid);
+                await setDoc(ref, { username, photoURL })
                 result.user.photoURL = photoURL;
                 result.user.displayName = username;
             })
